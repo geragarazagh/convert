@@ -47,7 +47,7 @@ Paste the text of [`SKILL.md`](skills/convert/SKILL.md) into the app's custom in
 
 ## Use
 
-Ask for the result in plain words, in any language. To call the skill by name: `/convert` in Claude Code, Claude, Gemini and Antigravity; `$convert` in Codex; `@convert` in ChatGPT.
+Ask for the result in plain words, in any language. To call the skill by name: `/convert` in Claude Code (`/convert:convert` when installed as the plugin), Claude, Gemini and Antigravity; `$convert` in Codex; `@convert` in ChatGPT.
 
 ```
 Make video.mkv play on my iPhone.
@@ -79,6 +79,7 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 
 2026-11-11: Claude Haiku 5.5 (`claude-haiku-5-5`) in Claude Code 2.1.321 on macOS 27.2 (Apple M3 Pro), in a fresh Claude Code configuration with no user instructions; the skill installed with `npx skills add`; the claude.ai account it signed in with still had its own skills turned on. Nine real requests, each asked plainly and once more as `/convert …`, on real files: the Sintel trailer (Blender Foundation, CC BY 3.0) as H.264 mp4 and as VP9/Opus mkv with Windows-1251 subtitles, Chekhov's «Каштанка» (1929 Ukrainian edition, DjVu from Wikimedia Commons) and a three-page scan of it, a HEIC photo of its cover, a Word file. Requests in English, Russian and Ukrainian.
 
+- Installs from this repository checked the same day: `npx skills add geragarazagh/convert -g` into an empty home folder (files identical to the repository), and the Claude Code plugin commands above, then one request through `/convert:convert`.
 - Results: 18 of 18 right (checked by script: codecs, duration, size, pages, text layer, encoding); the original was never changed.
 - The skill started by itself for 8 of the 9 plain requests; not for «make the PDF searchable», which was still done right.
 - First-run questions: asked in 9 of 9 runs called as `/convert`, in 4 of 9 when the skill started by itself, and in none of 3 runs where the instructions already said the person's language and manner, as intended.
