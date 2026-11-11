@@ -36,7 +36,7 @@ By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw
 Download the files from [Releases](https://github.com/geragarazagh/convert/releases/latest):
 
 - Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload; code execution must be on — **docs**.
-- Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it cannot convert. Asked to «convert this photo to JPEG», it started its image generator and redrew the picture instead (another size, changed details); since 0.1.1 the skill tells the model to say it cannot convert there rather than do that. For Gemini, use Gemini CLI or Antigravity on the computer.
+- Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it does not convert files. Twice, with 0.1.0 and 0.1.1, a photo with «convert this photo to JPEG» went straight to the app's image generator, which redrew the picture (another size, changed details) without reading the skill. Not for files in the Gemini app; for Gemini, use Gemini CLI or Antigravity on the computer.
 - ChatGPT: `convert.zip`. Skills → Create → Upload — **docs**.
 
 Chat sandboxes have no access to the files on the computer, only to uploads, and some lack ffmpeg or LibreOffice: there the skill does what the sandbox's tools allow and says when a job cannot be done.
