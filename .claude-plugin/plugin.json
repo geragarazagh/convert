@@ -1,0 +1,24 @@
+{
+  "name": "convert",
+  "displayName": "Convert",
+  "version": "0.1.0",
+  "description": "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data.",
+  "author": {
+    "name": "Herman Harazha",
+    "url": "https://geragaraza.com"
+  },
+  "homepage": "https://github.com/geragarazagh/convert",
+  "repository": "https://github.com/geragarazagh/convert",
+  "license": "MIT",
+  "keywords": [
+    "convert",
+    "file-conversion",
+    "ffmpeg",
+    "pdf",
+    "video",
+    "images",
+    "agent-skills"
+  ],
+  "supportUrl": "https://github.com/geragarazagh/convert/issues",
+  "privacyPolicyUrl": "https://geragaraza.com/skills/privacy/"
+}
