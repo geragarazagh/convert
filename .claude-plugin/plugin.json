@@ -1,7 +1,7 @@
 {
   "name": "convert",
   "displayName": "Convert",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data.",
   "author": {
     "name": "Herman Harazha",

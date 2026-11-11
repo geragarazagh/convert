@@ -36,7 +36,7 @@ By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw
 Download the files from [Releases](https://github.com/geragarazagh/convert/releases/latest):
 
 - Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload; code execution must be on — **docs**.
-- Gemini app (web, Mac, mobile): `convert.zip`, or the bare `SKILL.md` without the script. Customize → Skills → Create → Upload — **docs**.
+- Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it cannot convert. Asked to «convert this photo to JPEG», it started its image generator and redrew the picture instead (another size, changed details); since 0.1.1 the skill tells the model to say it cannot convert there rather than do that. For Gemini, use Gemini CLI or Antigravity on the computer.
 - ChatGPT: `convert.zip`. Skills → Create → Upload — **docs**.
 
 Chat sandboxes have no access to the files on the computer, only to uploads, and some lack ffmpeg or LibreOffice: there the skill does what the sandbox's tools allow and says when a job cannot be done.
@@ -85,11 +85,14 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 - First-run questions: asked in 9 of 9 runs called as `/convert`, in 4 of 9 when the skill started by itself, and in none of 3 runs where the instructions already said the person's language and manner, as intended.
 - The same nine plain requests without the skill: 8 of 9 right; the subtitle file was rewritten in place.
 
-Not tested: other models, other agents, the chat apps, Linux and Windows.
+These runs used 0.1.0. Version 0.1.1 adds one paragraph (never redraw or regenerate instead of converting; say so when nothing can run) and was not re-run on Haiku.
+
+Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
 
 ## What it cannot do
 
 - Files on the computer from a chat app: those apps see only uploads.
+- Conversions in an app that cannot run programs (the Gemini app): there the skill can only say so.
 - Copy-protected media (DRM), password-protected files without the password.
 - Layout-exact PDF to Word: text and simple layout only.
 - OCR of old spellings Tesseract has no model for (pre-1918 Russian, for example).

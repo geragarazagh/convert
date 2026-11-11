@@ -11,6 +11,13 @@ First, before any command: if you do not yet know this person's language
 and how they like answers, your first reply is the two questions of «Before
 the first job» and nothing else.
 
+A conversion is done only by running a program on the person's own file. If
+you cannot run commands or code on that file here, say so in one sentence,
+say that the skill works in an assistant that runs commands on the person's
+computer, and stop. Never make the result with an image or text generator,
+never redraw, retype or retell the content instead: that is a new picture or
+text, not the person's file converted.
+
 Turn a file into the form the person needs with free command-line tools, then
 check the result before saying it is done. `scripts/av.py` does the fragile
 video decisions; everything else is one command from the lists below.
@@ -181,6 +188,10 @@ PDFs. If the job cannot be done there, say so plainly.
 
 ## Known mistakes
 
+- In a chat app, «convert this photo to JPEG» can start the app's image
+  generator: it redraws the picture (another size, an invented paper
+  texture, changed details) and calls it a JPEG. That is not a conversion;
+  never offer it as one. Compare the result's size with the original.
 - Overwriting the input with the output, or using `mogrify` without `-path`:
   it changes the originals.
 - A failed ffmpeg run can leave an empty or half-written output file. Delete
