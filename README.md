@@ -22,7 +22,7 @@ npx skills add geragarazagh/convert -g
 
 It puts the skill into `~/.agents/skills/convert`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
-Claude Code, as a plugin — **run**:
+Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text without it):
 
 ```sh
 claude plugin marketplace add geragarazagh/convert
@@ -90,6 +90,8 @@ These runs used 0.1.0. Version 0.1.2 (no questions when the request is clear, do
 - 18 of 18 right, originals never changed, no question before any clear request; the replies came in the language of the request (Russian, Ukrainian, English).
 - The skill started by itself for 8 of the 9 plain requests (again not for «make the PDF searchable», which was still done right).
 - A bare `/convert` got one question: which file, and what it should become.
+
+Version 0.1.3 lets the skill work without its script (Anthropic's directory takes text files only from most publishers): `SKILL.md` gives the same video decisions as plain ffprobe and ffmpeg commands. Run on 2026-11-12, Haiku 5.5, a copy with `SKILL.md` alone: 12 of 12 jobs right (the nine plain requests and three as `/convert`), originals unchanged, the skill started by itself for 8 of 9; one answer to a Russian request came in English, so the language line was made explicit and that request run twice more (both in Russian). The full copy with the script: 3 of 3 right.
 
 Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
 

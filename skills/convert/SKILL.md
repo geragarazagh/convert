@@ -7,7 +7,8 @@ compatibility: "Needs an assistant that can run commands: a terminal agent on th
 
 # Convert
 
-Answer in the language of the person's message, briefly. When the request
+Answer in the language of the person's message (a request in Russian gets
+the whole answer in Russian), briefly. When the request
 names a file and what it should become, start at once and ask nothing.
 
 A conversion is done only by running a program on the person's own file. If
@@ -24,7 +25,9 @@ video decisions; everything else is one command from the lists below.
 `scripts/av.py` lives in this skill's own folder, the folder that holds this
 file, not in the person's folder. Call it by its full path, for example
 `python3 /path/to/convert/scripts/av.py info video.mkv`; below it is written
-short as `av.py`. It needs Python 3 and ffmpeg.
+short as `av.py`. It needs Python 3 and ffmpeg. Some copies of this skill
+come without the script (directories that accept text only): then do the
+same with the ffprobe and ffmpeg commands in «Video without av.py».
 
 ## Where the result goes
 
@@ -128,6 +131,32 @@ PDFs. If the job cannot be done there, say so plainly.
 - Burn subtitles into the picture: `ffmpeg -i IN -vf "subtitles=SUBS.srt" -c:a copy OUT.mp4`.
 - Even loudness for speech: `ffmpeg -i IN -af loudnorm=I=-16:TP=-1.5:LRA=11 OUT`.
 
+## Video without av.py
+
+The same decisions by hand, for a copy of the skill without the script.
+
+1. Look: `ffprobe -v error -show_entries stream=index,codec_type,codec_name,profile,pix_fmt,width,height,avg_frame_rate:stream_tags=language -of compact IN`
+   and `ffprobe -v error -show_entries format=duration -of csv=p=0 IN`.
+2. Plays everywhere: video may be copied only if it is h264 with pix_fmt
+   yuv420p and profile Baseline, Main or High; audio only if aac or mp3.
+   Everything else is re-encoded:
+   `ffmpeg -i IN -map 0:v:0 -map 0:a -c:v libx264 -preset medium -crf 23 -pix_fmt yuv420p -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -c:a aac -b:a 160k -movflags +faststart OUT.mp4`
+   (`-c:v copy` or `-c:a copy` instead where the stream may be copied).
+   Text subtitles (subrip, ass, webvtt): add `-map 0:s -c:s mov_text`;
+   picture subtitles (hdmv_pgs_subtitle, dvd_subtitle) cannot go in, leave
+   them out and say so. Languages: `-metadata:s:a:0 language=rus` and so on,
+   three letters.
+3. Fit a size: video kbit/s = size in MB × 8000 ÷ seconds × 0.96 − 128.
+   If that is below width × height × fps × 0.04 ÷ 1000, add
+   `-vf scale=-2:720` (then 540, 480, 360) and compute again. Two passes:
+   `ffmpeg -y -i IN -c:v libx264 -preset slow -b:v VIDEOk -pass 1 -an -f mp4 /dev/null`
+   (`NUL` instead of `/dev/null` on Windows), then
+   `ffmpeg -i IN -c:v libx264 -preset slow -b:v VIDEOk -pass 2 -c:a aac -b:a 128k OUT.mp4`.
+   Too big still: lower VIDEO by the overshoot and run both passes again.
+   Delete the `ffmpeg2pass*` log files afterwards.
+4. Check: the durations of IN and OUT (step 1) differ by at most half a
+   second, and OUT has as many video and audio streams as were kept.
+
 ## Pictures
 
 - HEIC, PNG, WebP, AVIF to JPEG: `magick IN -quality 90 OUT.jpg`. To WebP:
@@ -180,7 +209,7 @@ PDFs. If the job cannot be done there, say so plainly.
 ## Check
 
 - Video and audio: `av.py check IN OUT` (duration and track
-  counts). When the picture was changed (rotation, size, subtitles burned),
+  counts; without the script, step 4 of «Video without av.py»). When the picture was changed (rotation, size, subtitles burned),
   look at one frame: `ffmpeg -ss 2 -i OUT -frames:v 1 frame.jpg`.
 - Pictures: `magick identify OUT` (size, format); look at it once.
 - PDF: `pdfinfo OUT.pdf` (pages as expected); `pdftotext OUT.pdf - | head` for
