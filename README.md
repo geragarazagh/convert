@@ -70,8 +70,8 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 
 - Runs the tools above on the files named in the request.
 - Reads only those files; writes only new files next to them or where the person said. Never overwrites, moves or deletes the original.
-- Installs nothing by itself: names the install command and waits.
-- Sends nothing over the network. The tools work offline. No telemetry, no accounts, no keys.
+- On the person's computer installs nothing by itself: names the install command and waits for a yes. In a chat app's sandbox, which is thrown away with the chat, it installs a missing Python package (`pip`) by itself and says which.
+- Sends the person's files nowhere. The tools work offline; the only network use is that `pip` download inside a chat sandbox. No telemetry, no accounts, no keys.
 - Stores nothing about the person. Anything the person answers lives only in the conversation.
 - The installers are other people's programs with their own rules: `npx skills` (Vercel) sends an anonymous install count unless `DISABLE_TELEMETRY=1` is set.
 
