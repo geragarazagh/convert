@@ -35,7 +35,7 @@ By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw
 
 Download the files from [Releases](https://github.com/geragarazagh/convert/releases/latest):
 
-- Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload; code execution must be on — **docs**.
+- Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload skill; code execution must be on — **run** 2026-11-12 (0.1.1, Claude desktop app, chat, Haiku 5.5): «make this a JPEG to send» with a HEIC attached started the skill by itself and returned a real JPEG, 3718 × 5254 as the original, EXIF kept. In that sandbox HEIC opens only through pillow-heif, which 0.1.2 installs by itself.
 - Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it does not convert files. Twice, with 0.1.0 and 0.1.1, a photo with «convert this photo to JPEG» went straight to the app's image generator, which redrew the picture (another size, changed details) without reading the skill. Not for files in the Gemini app; for Gemini, use Gemini CLI or Antigravity on the computer.
 - ChatGPT: `convert.zip`. Skills → Create → Upload — **docs**.
 
@@ -58,7 +58,7 @@ Merge these PDFs and make the scan searchable.
 This subtitle file shows garbled letters, fix it.
 ```
 
-On the first job the assistant asks two things, unless it already knows the person: the language and how short the answers should be, and where to save results (default: next to the original, under a new name).
+The assistant answers in the language of the request and starts at once when the file and the wish are clear. On the computer the result goes next to the original under a new name; in a chat app it comes back as a file to download. It asks only when the request leaves the file or the target unclear.
 
 ## Tools it uses
 
@@ -72,7 +72,7 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 - Reads only those files; writes only new files next to them or where the person said. Never overwrites, moves or deletes the original.
 - Installs nothing by itself: names the install command and waits.
 - Sends nothing over the network. The tools work offline. No telemetry, no accounts, no keys.
-- Stores nothing about the person. The answers to the first-run questions live only in the conversation.
+- Stores nothing about the person. Anything the person answers lives only in the conversation.
 - The installers are other people's programs with their own rules: `npx skills` (Vercel) sends an anonymous install count unless `DISABLE_TELEMETRY=1` is set.
 
 ## Tested on
@@ -82,10 +82,14 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 - Installs from this repository checked the same day: `npx skills add geragarazagh/convert -g` into an empty home folder (files identical to the repository), and the Claude Code plugin commands above, then one request through `/convert:convert`.
 - Results: 18 of 18 right (checked by script: codecs, duration, size, pages, text layer, encoding); the original was never changed.
 - The skill started by itself for 8 of the 9 plain requests; not for «make the PDF searchable», which was still done right.
-- First-run questions: asked in 9 of 9 runs called as `/convert`, in 4 of 9 when the skill started by itself, and in none of 3 runs where the instructions already said the person's language and manner, as intended.
+- First-run questions (0.1.0 asked the language, the manner and where to save): asked in 9 of 9 runs called as `/convert`, in 4 of 9 when the skill started by itself, in none of 3 where the instructions already said the person's language and manner. Since 0.1.2 the skill asks nothing when the request is clear.
 - The same nine plain requests without the skill: 8 of 9 right; the subtitle file was rewritten in place.
 
-These runs used 0.1.0. Version 0.1.1 adds one paragraph (never redraw or regenerate instead of converting; say so when nothing can run) and was not re-run on Haiku.
+These runs used 0.1.0. Version 0.1.2 (no questions when the request is clear, downloads in chat sandboxes, pillow-heif for HEIC there) was run again on 2026-11-12, same model and files, in a fresh Claude Code configuration with no account skills at all, plus one bare `/convert`:
+
+- 18 of 18 right, originals never changed, no question before any clear request; the replies came in the language of the request (Russian, Ukrainian, English).
+- The skill started by itself for 8 of the 9 plain requests (again not for «make the PDF searchable», which was still done right).
+- A bare `/convert` got one question: which file, and what it should become.
 
 Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
 

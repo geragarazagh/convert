@@ -7,9 +7,8 @@ compatibility: "Needs an assistant that can run commands: a terminal agent on th
 
 # Convert
 
-First, before any command: if you do not yet know this person's language
-and how they like answers, your first reply is the two questions of «Before
-the first job» and nothing else.
+Answer in the language of the person's message, briefly. When the request
+names a file and what it should become, start at once and ask nothing.
 
 A conversion is done only by running a program on the person's own file. If
 you cannot run commands or code on that file here, say so in one sentence,
@@ -27,23 +26,18 @@ file, not in the person's folder. Call it by its full path, for example
 `python3 /path/to/convert/scripts/av.py info video.mkv`; below it is written
 short as `av.py`. It needs Python 3 and ffmpeg.
 
-## Before the first job
+## Where the result goes
 
-Look at what you already know about this person: memory, a profile, custom
-instructions, earlier messages of this conversation. If that tells you which
-language to use and how short the answers should be, skip this section.
+- On the person's computer: next to the original, under a new name, unless
+  they said otherwise.
+- In a chat app's sandbox (the file was uploaded; the person's disk is out
+  of reach): give the result as a file to download. Do not ask where to
+  save it.
 
-If it does not, do not start the job yet. Your first reply is only these two
-questions, in the language of the person's message:
-
-1. Which language should I answer in, and do you want short answers or the
-   steps explained?
-2. Where should I save results? Default: next to the original, under a new
-   name.
-
-Add that «go» accepts the defaults. Start the job after the answer. Keep the
-answers for the rest of the conversation; store them nowhere else unless the
-person asks.
+Ask only when the request leaves the file or the target unclear (a bare
+«/convert», «make it better»): one short question, in the person's language.
+Keep what they answer for the rest of the conversation; store it nowhere
+else unless the person asks.
 
 ## Every job
 
@@ -89,8 +83,11 @@ Usual meanings:
 | text encodings | uchardet, iconv | `uchardet --version` |
 | json, yaml, xml, csv | yq (mikefarah, v4) | `yq --version` |
 
-When a tool is missing, name it, give the install command for this system and
-wait. Install only after the person agrees.
+When a tool is missing on the person's computer, name it, give the install
+command for this system and wait. Install only after the person agrees. In
+a chat app's sandbox, which is thrown away with the chat, install what the
+job needs (`pip install …`) without asking, and say in the report what was
+installed.
 
 - macOS (Homebrew): `brew install ffmpeg imagemagick resvg qpdf poppler ghostscript img2pdf ocrmypdf tesseract-lang djvulibre pandoc sevenzip uchardet yq exiftool` and `brew install --cask libreoffice calibre`
 - Debian, Ubuntu: `sudo apt install ffmpeg imagemagick resvg qpdf poppler-utils ghostscript img2pdf ocrmypdf tesseract-ocr-all djvulibre-bin pandoc 7zip uchardet libimage-exiftool-perl libreoffice calibre` (yq: the binary from github.com/mikefarah/yq)
@@ -142,6 +139,12 @@ PDFs. If the job cannot be done there, say so plainly.
 - Remove location before sending to someone, on the copy:
   `exiftool -gps:all= -xmp:geotag= -overwrite_original COPY.jpg`.
 - macOS also has `sips -s format jpeg IN.heic --out OUT.jpg` built in.
+- HEIC where ImageMagick or ffmpeg fail (a chat sandbox's libheif may decode
+  only AV1): `pip install pillow-heif`, then in Python
+  `from PIL import Image; from pillow_heif import register_heif_opener;
+  register_heif_opener(); im = Image.open("IN.heic");
+  im.save("OUT.jpg", "JPEG", quality=90, exif=im.info.get("exif"))`.
+  Size and EXIF stay; the picture comes out turned the right way.
 
 ## PDF and scans
 
@@ -188,6 +191,8 @@ PDFs. If the job cannot be done there, say so plainly.
 
 ## Known mistakes
 
+- HEIC in a chat sandbox: ImageMagick, ffmpeg and OpenCV failed there
+  (libheif with only the AV1 decoder). Use pillow-heif (section «Pictures»).
 - In a chat app, «convert this photo to JPEG» can start the app's image
   generator: it redraws the picture (another size, an invented paper
   texture, changed details) and calls it a JPEG. That is not a conversion;
