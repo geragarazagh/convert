@@ -1,0 +1,30 @@
+{
+  "name": "convert",
+  "version": "0.1.3",
+  "description": "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data.",
+  "author": {
+    "name": "Herman Harazha",
+    "url": "https://geragaraza.com"
+  },
+  "homepage": "https://github.com/geragarazagh/convert",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Convert",
+    "shortDescription": "Convert files, check results",
+    "longDescription": "Ask in plain words and the assistant converts the file with a free command-line tool, then checks the result before saying it is done: video and audio (play on a phone or TV, compress to a size, cut, join, GIF, extract sound), photos (HEIC to JPEG, WebP, AVIF), PDF (merge, split, compress, OCR to searchable), DjVu, Word, Excel and PowerPoint to PDF, Markdown, e-books, archives, subtitles, garbled text encodings, JSON, YAML, CSV. The original file is never changed. Nothing is installed without the person's yes and nothing is sent over the network.",
+    "developerName": "Herman Harazha",
+    "category": "Productivity",
+    "capabilities": [],
+    "websiteURL": "https://github.com/geragarazagh/convert",
+    "supportURL": "https://github.com/geragarazagh/convert/issues",
+    "privacyPolicyURL": "https://geragaraza.com/skills/privacy/",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": [
+      "Convert this HEIC photo to JPEG.",
+      "Make this video play on my phone.",
+      "Make this scanned PDF searchable."
+    ]
+  }
+}

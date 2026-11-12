@@ -1,0 +1,108 @@
+<img src="assets/icon.png" width="128" alt="convert icon: a sheet with one text written in three scripts">
+
+# convert: a skill for AI assistants that converts files
+
+A free, open source agent skill. Ask an assistant in plain words («make this video play on my phone», «turn these HEIC photos into JPEG», «make this scan searchable») and it picks a free command-line tool, converts the file, and checks the result before saying it is done.
+
+Video, audio, subtitles, GIF, photos and pictures, SVG, PDF (merge, split, compress, OCR), DjVu, Word, Excel, PowerPoint, OpenDocument, Markdown, e-books (fb2, epub, mobi, azw3), archives (zip, 7z, rar), text encodings, JSON, YAML, XML, CSV.
+
+Works in any assistant that can run commands: terminal agents (Claude Code, Codex, Gemini CLI and Antigravity, OpenCode, OpenClaw, Hermes and others) on the computer that holds the files, and chat apps with code execution for files uploaded there. One file, `SKILL.md`, carries the whole method; it can also be pasted into any chat as instructions.
+
+## Install
+
+Each way is marked by how it was checked: **run** means installed and used for real on the date in «Tested on»; **docs** means taken from the vendor's documentation on 2026-11-11 and not yet run.
+
+### Terminal agents
+
+One command for every agent found on the computer (needs Node.js; `-g` installs for the user, without it for the current project only) — **run**:
+
+```sh
+npx skills add geragarazagh/convert -g
+```
+
+It puts the skill into `~/.agents/skills/convert`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
+
+Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text without it):
+
+```sh
+claude plugin marketplace add geragarazagh/convert
+claude plugin install convert@convert
+```
+
+By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build) — **docs**: copy `skills/convert` to `~/.agents/skills/convert`. Claude Code reads `~/.claude/skills/convert`; Antigravity reads `~/.gemini/config/skills/convert`.
+
+### Chat apps
+
+Download the files from [Releases](https://github.com/geragarazagh/convert/releases/latest):
+
+- Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload skill; code execution must be on — **run** 2026-11-12 (0.1.1, Claude desktop app, chat, Haiku 5.5): «make this a JPEG to send» with a HEIC attached started the skill by itself and returned a real JPEG, 3718 × 5254 as the original, EXIF kept. In that sandbox HEIC opens only through pillow-heif, which 0.1.2 installs by itself.
+- Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it does not convert files. Twice, with 0.1.0 and 0.1.1, a photo with «convert this photo to JPEG» went straight to the app's image generator, which redrew the picture (another size, changed details) without reading the skill. Not for files in the Gemini app; for Gemini, use Gemini CLI or Antigravity on the computer.
+- ChatGPT: `convert.zip`. Skills → Create → Upload — **docs**.
+
+Chat sandboxes have no access to the files on the computer, only to uploads, and some lack ffmpeg or LibreOffice: there the skill does what the sandbox's tools allow and says when a job cannot be done.
+
+### No skills in the app
+
+Paste the text of [`SKILL.md`](skills/convert/SKILL.md) into the app's custom instructions or a project's instructions, or as the first message of a chat. This also works where the skill does not start by itself.
+
+## Use
+
+Ask for the result in plain words, in any language. To call the skill by name: `/convert` in Claude Code (`/convert:convert` when installed as the plugin), Claude, Gemini and Antigravity; `$convert` in Codex; `@convert` in ChatGPT.
+
+```
+Make video.mkv play on my iPhone.
+Compress this video to under 25 MB for email.
+Convert all HEIC photos in this folder to JPEG.
+Make a GIF from 0:10 to 0:15.
+Merge these PDFs and make the scan searchable.
+This subtitle file shows garbled letters, fix it.
+```
+
+The assistant answers in the language of the request and starts at once when the file and the wish are clear. On the computer the result goes next to the original under a new name; in a chat app it comes back as a file to download. It asks only when the request leaves the file or the target unclear.
+
+## Tools it uses
+
+Free, open source command-line programs, each only if installed: ffmpeg, ImageMagick, resvg, qpdf, poppler, Ghostscript, img2pdf, OCRmyPDF with Tesseract, DjVuLibre, LibreOffice, pandoc, calibre, 7-Zip, uchardet, iconv, yq, ExifTool. When one is missing, the assistant names it, gives the install command for the system (Homebrew, apt, winget) and waits for a yes.
+
+`skills/convert/scripts/av.py` (Python 3, standard library, about 330 lines) holds the video decisions that are easy to get wrong: what to copy and what to re-encode for an mp4 that plays everywhere, two-pass encoding to a target size, and checking duration and tracks of the result.
+
+## What this skill does on the computer
+
+- Runs the tools above on the files named in the request.
+- Reads only those files; writes only new files next to them or where the person said. Never overwrites, moves or deletes the original.
+- On the person's computer installs nothing by itself: names the install command and waits for a yes. In a chat app's sandbox, which is thrown away with the chat, it installs a missing Python package (`pip`) by itself and says which.
+- Sends the person's files nowhere. The tools work offline; the only network use is that `pip` download inside a chat sandbox. No telemetry, no accounts, no keys.
+- Stores nothing about the person. Anything the person answers lives only in the conversation.
+- The installers are other people's programs with their own rules: `npx skills` (Vercel) sends an anonymous install count unless `DISABLE_TELEMETRY=1` is set.
+
+## Tested on
+
+2026-11-11: Claude Haiku 5.5 (`claude-haiku-5-5`) in Claude Code 2.1.321 on macOS 27.2 (Apple M3 Pro), in a fresh Claude Code configuration with no user instructions; the skill installed with `npx skills add`; the claude.ai account it signed in with still had its own skills turned on. Nine real requests, each asked plainly and once more as `/convert …`, on real files: the Sintel trailer (Blender Foundation, CC BY 3.0) as H.264 mp4 and as VP9/Opus mkv with Windows-1251 subtitles, Chekhov's «Каштанка» (1929 Ukrainian edition, DjVu from Wikimedia Commons) and a three-page scan of it, a HEIC photo of its cover, a Word file. Requests in English, Russian and Ukrainian.
+
+- Installs from this repository checked the same day: `npx skills add geragarazagh/convert -g` into an empty home folder (files identical to the repository), and the Claude Code plugin commands above, then one request through `/convert:convert`.
+- Results: 18 of 18 right (checked by script: codecs, duration, size, pages, text layer, encoding); the original was never changed.
+- The skill started by itself for 8 of the 9 plain requests; not for «make the PDF searchable», which was still done right.
+- First-run questions (0.1.0 asked the language, the manner and where to save): asked in 9 of 9 runs called as `/convert`, in 4 of 9 when the skill started by itself, in none of 3 where the instructions already said the person's language and manner. Since 0.1.2 the skill asks nothing when the request is clear.
+- The same nine plain requests without the skill: 8 of 9 right; the subtitle file was rewritten in place.
+
+These runs used 0.1.0. Version 0.1.2 (no questions when the request is clear, downloads in chat sandboxes, pillow-heif for HEIC there) was run again on 2026-11-12, same model and files, in a fresh Claude Code configuration with no account skills at all, plus one bare `/convert`:
+
+- 18 of 18 right, originals never changed, no question before any clear request; the replies came in the language of the request (Russian, Ukrainian, English).
+- The skill started by itself for 8 of the 9 plain requests (again not for «make the PDF searchable», which was still done right).
+- A bare `/convert` got one question: which file, and what it should become.
+
+Version 0.1.3 lets the skill work without its script (Anthropic's directory takes text files only from most publishers): `SKILL.md` gives the same video decisions as plain ffprobe and ffmpeg commands. Run on 2026-11-12, Haiku 5.5, a copy with `SKILL.md` alone: 12 of 12 jobs right (the nine plain requests and three as `/convert`), originals unchanged, the skill started by itself for 8 of 9; one answer to a Russian request came in English, so the language line was made explicit and that request run twice more (both in Russian). The full copy with the script: 3 of 3 right.
+
+Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
+
+## What it cannot do
+
+- Files on the computer from a chat app: those apps see only uploads.
+- Conversions in an app that cannot run programs (the Gemini app): there the skill can only say so.
+- Copy-protected media (DRM), password-protected files without the password.
+- Layout-exact PDF to Word: text and simple layout only.
+- OCR of old spellings Tesseract has no model for (pre-1918 Russian, for example).
+
+## License
+
+MIT

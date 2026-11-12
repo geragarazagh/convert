@@ -1,0 +1,15 @@
+{
+  "name": "convert",
+  "description": "The convert skill: files between formats with free command-line tools.",
+  "owner": {
+    "name": "Herman Harazha",
+    "url": "https://geragaraza.com"
+  },
+  "plugins": [
+    {
+      "name": "convert",
+      "source": "./",
+      "description": "Converts files between formats with free command-line tools and checks the result."
+    }
+  ]
+}
