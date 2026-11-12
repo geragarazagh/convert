@@ -22,7 +22,7 @@ npx skills add geragarazagh/convert -g
 
 It puts the skill into `~/.agents/skills/convert`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
-Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text without it):
+Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text and version without it; 0.1.4 changes only the version number, so that the directory sees the branch as a new version):
 
 ```sh
 claude plugin marketplace add geragarazagh/convert
