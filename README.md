@@ -103,6 +103,8 @@ Version 0.1.3 lets the skill work without its script (Anthropic's directory take
 
 Version 0.1.5 adds the Gemini CLI manifest and changes nothing in the skill.
 
+Version 0.2.0 renames the skill from `convert` to `converter` and sets the catalogue icons; what the skill does is unchanged. On 2026-11-18 the installs were run again under the new name from this repository's v0.2.0 release, each into an empty home folder: `npx skills add geragarazagh/converter -g` (files identical to `skills/converter`), the Claude Code plugin commands above in Claude Code 2.1.326 (the plugin's skill folder identical), and `gemini extensions install` in Gemini CLI 0.68.0 (installed from the release, version 0.2.0, the skill folder identical).
+
 Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
 
 ## What it cannot do
