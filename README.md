@@ -22,11 +22,17 @@ npx skills add geragarazagh/convert -g
 
 It puts the skill into `~/.agents/skills/convert`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
-Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text and version without it; 0.1.4 changes only the version number, so that the directory sees the branch as a new version):
+Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text and version without it):
 
 ```sh
 claude plugin marketplace add geragarazagh/convert
 claude plugin install convert@convert
+```
+
+Gemini CLI, as an extension — **run** (2026-11-18, from this repository's latest release on GitHub, Gemini CLI 0.68.0, into an empty home folder: the extension installed and its skill listed by `gemini skills list`):
+
+```sh
+gemini extensions install https://github.com/geragarazagh/convert
 ```
 
 By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build) — **docs**: copy `skills/convert` to `~/.agents/skills/convert`. Claude Code reads `~/.claude/skills/convert`; Antigravity reads `~/.gemini/config/skills/convert`.
@@ -92,6 +98,8 @@ These runs used 0.1.0. Version 0.1.2 (no questions when the request is clear, do
 - A bare `/convert` got one question: which file, and what it should become.
 
 Version 0.1.3 lets the skill work without its script (Anthropic's directory takes text files only from most publishers): `SKILL.md` gives the same video decisions as plain ffprobe and ffmpeg commands. Run on 2026-11-12, Haiku 5.5, a copy with `SKILL.md` alone: 12 of 12 jobs right (the nine plain requests and three as `/convert`), originals unchanged, the skill started by itself for 8 of 9; one answer to a Russian request came in English, so the language line was made explicit and that request run twice more (both in Russian). The full copy with the script: 3 of 3 right.
+
+Version 0.1.5 adds the Gemini CLI manifest and changes nothing in the skill.
 
 Not tested: other models, other agents, the Claude and ChatGPT apps, Linux and Windows.
 
