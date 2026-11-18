@@ -1,4 +1,4 @@
-<img src="assets/icon.png" width="128" alt="convert icon: a sheet with one text written in three scripts">
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icon-github-dark.png"><img src="assets/icon-github.png" width="128" alt="convert icon: a sheet with one text written in three scripts"></picture>
 
 # convert: a skill for AI assistants that converts files
 
