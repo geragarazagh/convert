@@ -1,11 +1,11 @@
 ---
-name: convert
+name: converter
 description: "Converts a file into another format, size or form and checks the result: video and audio (play on a phone or TV, compress to a size, cut, join, GIF, extract sound), photos (HEIC to JPEG), PDF (merge, split, compress, OCR to searchable), DjVu, Word, Excel and PowerPoint to PDF, e-books, archives, subtitles, garbled letters and wrong text encodings, JSON, YAML, CSV. Use whenever a file has to become another file or be fixed."
 license: MIT
 compatibility: "Needs an assistant that can run commands: a terminal agent on the person's computer, or a chat app with code execution for uploaded files. Uses ffmpeg, ImageMagick, LibreOffice, pandoc and similar tools where installed."
 ---
 
-# Convert
+# Converter
 
 Answer in the language of the person's message (a request in Russian gets
 the whole answer in Russian), briefly. When the request
@@ -24,7 +24,7 @@ video decisions; everything else is one command from the lists below.
 
 `scripts/av.py` lives in this skill's own folder, the folder that holds this
 file, not in the person's folder. Call it by its full path, for example
-`python3 /path/to/convert/scripts/av.py info video.mkv`; below it is written
+`python3 /path/to/converter/scripts/av.py info video.mkv`; below it is written
 short as `av.py`. It needs Python 3 and ffmpeg. Some copies of this skill
 come without the script (directories that accept text only): then do the
 same with the ffprobe and ffmpeg commands in «Video without av.py».
@@ -38,7 +38,7 @@ same with the ffprobe and ffmpeg commands in «Video without av.py».
   save it.
 
 Ask only when the request leaves the file or the target unclear (a bare
-«/convert», «make it better»): one short question, in the person's language.
+«/converter», «make it better»): one short question, in the person's language.
 Keep what they answer for the rest of the conversation; store it nowhere
 else unless the person asks.
 

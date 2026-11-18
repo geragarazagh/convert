@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""av.py: the fragile video and audio decisions of the convert skill, as one script.
+"""av.py: the fragile video and audio decisions of the converter skill, as one script.
 
 Needs Python 3.8+ and ffmpeg + ffprobe on PATH. Standard library only.
 Reads only the files you name, writes only the output you name, uses no network.

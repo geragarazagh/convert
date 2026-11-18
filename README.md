@@ -1,6 +1,6 @@
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icon-github-dark.png"><img src="assets/icon-github.png" width="128" alt="convert icon: a sheet with one text written in three scripts"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/icon-github-dark.png"><img src="assets/icon-github.png" width="128" alt="converter icon: a sheet with one text written in three scripts"></picture>
 
-# convert: a skill for AI assistants that converts files
+# converter: a skill for AI assistants that converts files
 
 A free, open source agent skill. Ask an assistant in plain words («make this video play on my phone», «turn these HEIC photos into JPEG», «make this scan searchable») and it picks a free command-line tool, converts the file, and checks the result before saying it is done.
 
@@ -17,43 +17,43 @@ Each way is marked by how it was checked: **run** means installed and used for r
 One command for every agent found on the computer (needs Node.js; `-g` installs for the user, without it for the current project only) — **run**:
 
 ```sh
-npx skills add geragarazagh/convert -g
+npx skills add geragarazagh/converter -g
 ```
 
-It puts the skill into `~/.agents/skills/convert`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
+It puts the skill into `~/.agents/skills/converter`, which Codex, Cursor, Cline, OpenCode and most other agents read, and links it into `~/.claude/skills` for Claude Code.
 
 Claude Code, as a plugin — **run** (the plugin from this repository's main branch carries the script; the copy in Anthropic's directory is the branch `directory`, the same text and version without it):
 
 ```sh
-claude plugin marketplace add geragarazagh/convert
-claude plugin install convert@convert
+claude plugin marketplace add geragarazagh/converter
+claude plugin install converter@converter
 ```
 
 Gemini CLI, as an extension — **run** (2026-11-18, from this repository's latest release on GitHub, Gemini CLI 0.68.0, into an empty home folder: the extension installed and its skill listed by `gemini skills list`):
 
 ```sh
-gemini extensions install https://github.com/geragarazagh/convert
+gemini extensions install https://github.com/geragarazagh/converter
 ```
 
-By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build) — **docs**: copy `skills/convert` to `~/.agents/skills/convert`. Claude Code reads `~/.claude/skills/convert`; Antigravity reads `~/.gemini/config/skills/convert`.
+By hand, any agent that reads the Agent Skills folder (Codex, OpenCode, OpenClaw, Hermes, Grok Build) — **docs**: copy `skills/converter` to `~/.agents/skills/converter`. Claude Code reads `~/.claude/skills/converter`; Antigravity reads `~/.gemini/config/skills/converter`.
 
 ### Chat apps
 
-Download the files from [Releases](https://github.com/geragarazagh/convert/releases/latest):
+Download the files from [Releases](https://github.com/geragarazagh/converter/releases/latest):
 
-- Claude (web, desktop, mobile): `convert.zip`. Customize → Skills → + → Upload skill; code execution must be on — **run** 2026-11-12 (0.1.1, Claude desktop app, chat, Haiku 5.5): «make this a JPEG to send» with a HEIC attached started the skill by itself and returned a real JPEG, 3718 × 5254 as the original, EXIF kept. In that sandbox HEIC opens only through pillow-heif, which 0.1.2 installs by itself.
-- Gemini app (web, Mac, mobile): `convert.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it does not convert files. Twice, with 0.1.0 and 0.1.1, a photo with «convert this photo to JPEG» went straight to the app's image generator, which redrew the picture (another size, changed details) without reading the skill. Not for files in the Gemini app; for Gemini, use Gemini CLI or Antigravity on the computer.
-- ChatGPT: `convert.zip`. Skills → Create → Upload — **docs**.
+- Claude (web, desktop, mobile): `converter.zip`. Customize → Skills → + → Upload skill; code execution must be on — **run** 2026-11-12 (0.1.1, Claude desktop app, chat, Haiku 5.5): «make this a JPEG to send» with a HEIC attached started the skill by itself and returned a real JPEG, 3718 × 5254 as the original, EXIF kept. In that sandbox HEIC opens only through pillow-heif, which 0.1.2 installs by itself.
+- Gemini app (web, Mac, mobile): `converter.zip`. Customize → Skills → Create → Upload — **run** 2026-11-11: the upload works (name, description, instructions and `av.py` all arrive), but the app cannot run the tools, so it does not convert files. Twice, with 0.1.0 and 0.1.1, a photo with «convert this photo to JPEG» went straight to the app's image generator, which redrew the picture (another size, changed details) without reading the skill. Not for files in the Gemini app; for Gemini, use Gemini CLI or Antigravity on the computer.
+- ChatGPT: `converter.zip`. Skills → Create → Upload — **docs**.
 
 Chat sandboxes have no access to the files on the computer, only to uploads, and some lack ffmpeg or LibreOffice: there the skill does what the sandbox's tools allow and says when a job cannot be done.
 
 ### No skills in the app
 
-Paste the text of [`SKILL.md`](skills/convert/SKILL.md) into the app's custom instructions or a project's instructions, or as the first message of a chat. This also works where the skill does not start by itself.
+Paste the text of [`SKILL.md`](skills/converter/SKILL.md) into the app's custom instructions or a project's instructions, or as the first message of a chat. This also works where the skill does not start by itself.
 
 ## Use
 
-Ask for the result in plain words, in any language. To call the skill by name: `/convert` in Claude Code (`/convert:convert` when installed as the plugin), Claude, Gemini and Antigravity; `$convert` in Codex; `@convert` in ChatGPT.
+Ask for the result in plain words, in any language. To call the skill by name: `/converter` in Claude Code (`/converter:converter` when installed as the plugin), Claude, Gemini and Antigravity; `$converter` in Codex; `@converter` in ChatGPT.
 
 ```
 Make video.mkv play on my iPhone.
@@ -70,7 +70,7 @@ The assistant answers in the language of the request and starts at once when the
 
 Free, open source command-line programs, each only if installed: ffmpeg, ImageMagick, resvg, qpdf, poppler, Ghostscript, img2pdf, OCRmyPDF with Tesseract, DjVuLibre, LibreOffice, pandoc, calibre, 7-Zip, uchardet, iconv, yq, ExifTool. When one is missing, the assistant names it, gives the install command for the system (Homebrew, apt, winget) and waits for a yes.
 
-`skills/convert/scripts/av.py` (Python 3, standard library, about 330 lines) holds the video decisions that are easy to get wrong: what to copy and what to re-encode for an mp4 that plays everywhere, two-pass encoding to a target size, and checking duration and tracks of the result.
+`skills/converter/scripts/av.py` (Python 3, standard library, about 330 lines) holds the video decisions that are easy to get wrong: what to copy and what to re-encode for an mp4 that plays everywhere, two-pass encoding to a target size, and checking duration and tracks of the result.
 
 ## What this skill does on the computer
 
@@ -82,6 +82,8 @@ Free, open source command-line programs, each only if installed: ffmpeg, ImageMa
 - The installers are other people's programs with their own rules: `npx skills` (Vercel) sends an anonymous install count unless `DISABLE_TELEMETRY=1` is set.
 
 ## Tested on
+
+Until 0.2.0 (2026-11-18) the skill was named `convert`, in the repository geragarazagh/convert, which GitHub now redirects here; the runs below used that name.
 
 2026-11-11: Claude Haiku 5.5 (`claude-haiku-5-5`) in Claude Code 2.1.321 on macOS 27.2 (Apple M3 Pro), in a fresh Claude Code configuration with no user instructions; the skill installed with `npx skills add`; the claude.ai account it signed in with still had its own skills turned on. Nine real requests, each asked plainly and once more as `/convert …`, on real files: the Sintel trailer (Blender Foundation, CC BY 3.0) as H.264 mp4 and as VP9/Opus mkv with Windows-1251 subtitles, Chekhov's «Каштанка» (1929 Ukrainian edition, DjVu from Wikimedia Commons) and a three-page scan of it, a HEIC photo of its cover, a Word file. Requests in English, Russian and Ukrainian.
 

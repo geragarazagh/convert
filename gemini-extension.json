@@ -1,5 +1,5 @@
 {
-  "name": "convert",
-  "version": "0.1.5",
+  "name": "converter",
+  "version": "0.2.0",
   "description": "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data."
 }
