@@ -1,8 +1,8 @@
 {
   "name": "converter",
   "displayName": "Converter",
-  "version": "0.2.1",
-  "description": "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data.",
+  "version": "0.2.2",
+  "description": "Converts files between formats: video, audio, images, PDF, documents, e-books, archives.",
   "author": {
     "name": "Herman Harazha",
     "url": "https://geragaraza.com"
@@ -10,16 +10,6 @@
   "homepage": "https://github.com/geragarazagh/converter",
   "repository": "https://github.com/geragarazagh/converter",
   "license": "MIT",
-  "keywords": [
-    "converter",
-    "convert",
-    "file-conversion",
-    "ffmpeg",
-    "pdf",
-    "video",
-    "images",
-    "agent-skills"
-  ],
   "supportUrl": "https://github.com/geragarazagh/converter/issues",
   "privacyPolicyUrl": "https://geragaraza.com/skills/privacy/",
   "icon": "./.claude-plugin/icon.png"

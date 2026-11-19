@@ -1,6 +1,6 @@
 {
   "name": "converter",
-  "description": "The converter skill: files between formats with free command-line tools.",
+  "description": "Converts files between formats: video, audio, images, PDF, documents, e-books, archives.",
   "owner": {
     "name": "Herman Harazha",
     "url": "https://geragaraza.com"
@@ -9,7 +9,7 @@
     {
       "name": "converter",
       "source": "./",
-      "description": "Converts files between formats with free command-line tools and checks the result."
+      "description": "Converts files between formats: video, audio, images, PDF, documents, e-books, archives."
     }
   ]
 }

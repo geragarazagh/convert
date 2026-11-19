@@ -1,5 +1,5 @@
 # Read by Codex and ChatGPT (skill interface) and by ClawHub (display name, summary, icon).
 interface:
   display_name: "Converter"
-  short_description: "Converts files between formats with free command-line tools and checks the result: video, audio, images, PDF, office documents, e-books, archives, subtitles, text encodings and data."
+  short_description: "Converts files between formats: video, audio, images, PDF, documents, e-books, archives."
   icon_small: "./assets/icon-small.svg"
